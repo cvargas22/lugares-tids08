@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         ),
         home: ListaLugaresScreen(),
         routes: {
-          'agregar_lugar': (context) => AgregarLugarScreen()
+          AgregarLugarScreen.routeName : (context) => AgregarLugarScreen()
         },
 
       ),
