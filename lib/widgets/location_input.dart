@@ -1,4 +1,5 @@
 import 'package:app_lugares/helpers/location_helper.dart';
+import 'package:app_lugares/screens/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
@@ -28,6 +29,21 @@ class _LocationInputState extends State<LocationInput> {
     } catch (e) {
       return;
     }
+  }
+
+  Future<void> seleccionarEnMapa() async{
+    final ubicacionSeleccionada = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => MapScreen(
+          estaSeleccionando: true,
+        )
+      )
+    );
+    if(ubicacionSeleccionada == null) return;
+
+    mostrarPrevia(ubicacionSeleccionada.latitude, ubicacionSeleccionada.longitude);
+    widget.onSelectLugar(ubicacionSeleccionada.latitude, ubicacionSeleccionada.longitude);
   }
 
   @override
@@ -62,7 +78,7 @@ class _LocationInputState extends State<LocationInput> {
               textColor: Theme.of(context).primaryColor,
             ),
             FlatButton.icon(
-              onPressed: (){},
+              onPressed: seleccionarEnMapa,
               icon: Icon(Icons.map),
               label: Text('Sel. en Mapa'),
               textColor: Theme.of(context).primaryColor,

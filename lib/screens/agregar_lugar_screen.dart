@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:app_lugares/models/lugar_model.dart';
+import 'package:app_lugares/providers/mis_lugares.dart';
 import 'package:app_lugares/widgets/image_input.dart';
 import 'package:app_lugares/widgets/location_input.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class AgregarLugarScreen extends StatefulWidget {
@@ -22,6 +24,18 @@ class _AgregarLugarScreenState extends State<AgregarLugarScreen> {
 
   void seleccionarUbicacion(double lat, double lng){
     _ubicacionSeleccionada = Ubicacion(latitud: lat, longitud: lng);
+  }
+
+  void guardarLugar(){
+    if(tituloController.text.isEmpty || _imagenSeleccionada == null || _ubicacionSeleccionada == null){
+      return;
+    }
+    Provider.of<MisLugares>(context, listen: false).agregarLugar(
+      tituloController.text, 
+      _imagenSeleccionada, 
+      _ubicacionSeleccionada
+    );
+    Navigator.of(context).pop();
   }
 
   @override
@@ -56,7 +70,7 @@ class _AgregarLugarScreenState extends State<AgregarLugarScreen> {
           ),
           RaisedButton.icon(
             icon: Icon(Icons.add),
-            onPressed: (){},
+            onPressed: guardarLugar,
             label: Text('Agregar Lugar'),
             color: Theme.of(context).accentColor,
             elevation: 0,

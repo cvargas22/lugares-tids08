@@ -11,7 +11,7 @@ class Ubicacion{
   final double longitud;
   final String direccion;
 
-  Ubicacion({
+  const Ubicacion({
     @required this.latitud,
     @required this.longitud,
     this.direccion
