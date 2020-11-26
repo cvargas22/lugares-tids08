@@ -1,5 +1,6 @@
 import 'package:app_lugares/providers/mis_lugares.dart';
 import 'package:app_lugares/screens/agregar_lugar_screen.dart';
+import 'package:app_lugares/screens/detalle_lugar_screen.dart';
 import 'package:app_lugares/screens/lista_lugares_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
         ),
         home: ListaLugaresScreen(),
         routes: {
-          AgregarLugarScreen.routeName : (context) => AgregarLugarScreen()
+          AgregarLugarScreen.routeName : (context) => AgregarLugarScreen(),
+          DetalleLugarScreen.routeName : (context) => DetalleLugarScreen()
         },
 
       ),

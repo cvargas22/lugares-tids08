@@ -5,6 +5,7 @@
 import 'dart:io';
 
 import 'package:app_lugares/helpers/db_helper.dart';
+import 'package:app_lugares/helpers/location_helper.dart';
 import 'package:app_lugares/models/lugar_model.dart';
 import 'package:flutter/foundation.dart';
 
@@ -34,7 +35,7 @@ class MisLugares extends ChangeNotifier{
     _items = listaData.map((item) => Lugar(
       id: item['id'],
       titulo: item['titulo'],
-      imagen: item['imagen'],
+      imagen: File(item['imagen']),
       ubicacion: Ubicacion(
         latitud: item['ub_lat'],
         longitud: item['ub_lng'],
@@ -45,11 +46,11 @@ class MisLugares extends ChangeNotifier{
   }
 
   Future<void> agregarLugar(String tituloSelec, File imagenSelec, Ubicacion ubicacionSelec) async{
-
+    final direccion = await LocationHelper.obtenerDireccionLugar(ubicacionSelec.latitud, ubicacionSelec.longitud);
     final ubicacion = Ubicacion(
       latitud: ubicacionSelec.latitud,
       longitud: ubicacionSelec.longitud,
-      direccion: '' //por ahora la direccion la dejamos vacia, hasta que usemos la API de Google
+      direccion: direccion //por ahora la direccion la dejamos vacia, hasta que usemos la API de Google
     );
     final nuevoLugar = Lugar(
       id: DateTime.now().toString(),
@@ -64,7 +65,7 @@ class MisLugares extends ChangeNotifier{
       {
         'id': nuevoLugar.id,
         'titulo': nuevoLugar.titulo,
-        'imagen': nuevoLugar.imagen,
+        'imagen': nuevoLugar.imagen.path,
         'ub_lat': nuevoLugar.ubicacion.latitud,
         'ub_lng': nuevoLugar.ubicacion.longitud,
         'direccion': nuevoLugar.ubicacion.direccion
