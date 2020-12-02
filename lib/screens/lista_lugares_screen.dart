@@ -65,7 +65,8 @@ class ListaLugaresScreen extends StatelessWidget {
                 title: Text(misLugares.items[i].titulo),
                 subtitle: Text(misLugares.items[i].ubicacion.direccion),
                 onTap: () => Navigator.of(context).pushNamed(
-                  DetalleLugarScreen.routeName
+                  DetalleLugarScreen.routeName,
+                  arguments: misLugares.items[i].id
                 ),
               ),
             )
